@@ -48,7 +48,7 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "cron-parser": "^5.0.4",
     "dayjs": "^1.11.13",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.25.1",
     "fdir": "^6.4.3",
     "linky": "^2.1.1",
     "node-cron": "^3.0.3"
