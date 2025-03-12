@@ -5,6 +5,7 @@ const dayjs = require("dayjs");
 var log = () => { /* do nothing */ };
 
 class TIMERS {
+
   constructor (Tools, config) {
     this.config = config;
     if (this.config.debug) log = (...args) => { console.log("[LINKY] [TIMERS]", ...args); };
@@ -12,7 +13,17 @@ class TIMERS {
     this.refreshData = () => Tools.refreshData();
     this.timers = {};
     this.timer = null;
-    this.cronExpression = "0 0 12 * * *";
+
+    Number.prototype.between = function (lower, upper) {
+      return lower <= this && this <= upper;
+    };
+
+    if (!Number.isInteger(this.config.updateHour) || !this.config.updateHour.between(6, 14)) {
+      this.config.updateHour = 14;
+      console.warn("[LINKY] [TIMERS] La configuration updateHour n'est pas correcte.");
+      console.warn("[LINKY] [TIMERS] Correction de updateHour avec la valeur par defaut:", this.config.updateHour);
+    }
+    this.cronExpression = `0 0 ${this.config.updateHour} * * *`;
   }
 
   // Retry Timer en cas d'erreur, relance la requete 2 heures apres
@@ -41,7 +52,7 @@ class TIMERS {
     const randomMinute = Math.floor(Math.random() * 15);
     const randomSecond = Math.floor(Math.random() * 59);
 
-    this.cronExpression = `${randomSecond} ${randomMinute} 12 * * *`;
+    this.cronExpression = `${randomSecond} ${randomMinute} ${this.config.updateHour} * * *`;
     cron.schedule(this.cronExpression, () => {
       log("Exécution de la tâche planifiée de récupération des données.");
       this.refreshData();

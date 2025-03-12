@@ -8,7 +8,7 @@ Si vous choisissez de récupérer les données de l'année précédente une comp
 
 Le header est également dynamique et changera en fonction de la période sélectionnée !
 
-Les données sont actualisées chaque jour entre 12h et 12h15.
+Les données sont actualisées une fois par jour.
 
 ## ScreenShots
 
@@ -58,7 +58,8 @@ Pour utiliser ce module, ajoutez-le au tableau modules dans le fichier `config/c
         header: 1,
         energie: 1,
         updateDate: 1,
-        updateNext: 1
+        updateNext: 1,
+        updateHour: 14
       },
     },
 ```
@@ -95,6 +96,7 @@ Option|Default|Description
 `energie`|1|Affiche l'indicateur de consomation d'énergie. <br>`1` : afficher <br>`0` : masquer
 `updateDate`|1|Affiche la date de récupération des données. <br>`1` : afficher <br>`0` : masquer
 `updateNext`|1|Affiche la date du prochain cycle de récupération des données. <br>`1` : afficher <br>`0` : masquer
+`updateHour`|14|Heure de la tâche planifiée pour la mise à jours des données. (voir ci-dessous)
 
 ### APIs
 
@@ -109,7 +111,7 @@ Il est également possible d'afficher vos données de production d'energie.
 * `getDailyProduction`: Récupère la production quotidienne.
 * `getProductionLoadCurve`: Récupère la puissance moyenne produite sur un intervalle de 30 min.
 
-## Mise en cache des données
+### Mise en cache des données
 
 Afin d'éviter une surcharge de l'API, une mise en cache des données a été mise en place.
 
@@ -117,7 +119,7 @@ De ce fait, lors d'un redémarrage de `MagicMirror²`, `MMM-Linky` utilisera les
 
 La validité de ce cache à été fixée à 10h.
 
-## Effacer le cache des données
+### Effacer le cache des données
 
 Vous pouvez toute fois détruire ce cache avec la commande: `npm run reset:cache`
 
@@ -134,7 +136,7 @@ Malheurement, nous n'avons aucun pouvoir pour la débloquer...
 
 Pour rappel un appel API est une requête. si vous utilisez 2 API en config... c'est donc 2 requêtes !
 
-## Changement de configuration
+### Changement de configuration
 
 Afin de générer un nouveau cache, une nouvelle requête sera relancé pour les API suivantes (si utilisées)
 
@@ -148,6 +150,12 @@ Afin de générer un nouveau cache, une nouvelle requête sera relancé pour les
 
 * `getDailyConsumption`
 * `getDailyProduction`
+
+### Changement de l'heure de la jour des données (tâche planifiée)
+
+Par défaut, les mises à jours des données sont programmés à 14h (`14` dans la configuration `updateHour`) avec une selection aléatoire dans les 15 premières minutes.
+
+Vous pouvez changer l'heure de cette mise jour par une autre heure comprise entre `6` et `14`.
 
 ## Mise à jour
 

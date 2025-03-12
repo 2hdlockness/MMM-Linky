@@ -18,7 +18,8 @@ Module.register("MMM-Linky", {
     header: 1,
     energie: 1,
     updateDate: 1,
-    updateNext: 1
+    updateNext: 1,
+    updateHour: 14
   },
 
   start () {
